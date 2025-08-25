@@ -26,16 +26,16 @@ Maze search progress and results are stored in the `assets/` folder.
 
 ### Examples:  
 
-#### DFS Search  
+### DFS Search  
 ![DFS](assets/dfs.png)  
 
-#### BFS Search  
+### BFS Search  
 ![BFS](assets/bfs.png)  
 
-#### Greedy Best First Search  
+### Greedy Best First Search  
 ![GBFS](assets/gbfs.png)  
 
-#### A* Search  
+### A* Search  
 ![A*](assets/astar.png)  
 
 #### Minimax Example  
