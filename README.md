@@ -67,27 +67,27 @@ cd search-in-ai
 
 Run each algorithm individually on a maze text file:
 
-# Depth First Search
+#### Depth First Search
 ```py
 python3 dfs.py maze1.txt
 ```
-# Breadth First Search
+#### Breadth First Search
 ```py
 python3 bfs.py maze1.txt
 ```
-# Greedy Best First Search
+#### Greedy Best First Search
 ```py
 python3 gbsf.py maze1.txt
 ```
-# A* Search
+#### A* Search
 ```py
 python3 astar.py maze1.txt
 ```
-# Minimax (for games)
+#### Minimax (for games)
 ```py
 python3 minimax.py
 ```
-# Alpha-Beta Pruning (for games)
+#### Alpha-Beta Pruning (for games)
 ```py
 python3 alphabeta.py
 ```
