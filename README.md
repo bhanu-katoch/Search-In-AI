@@ -62,3 +62,33 @@ Maze search progress and results are stored in the `assets/` folder.
 ```bash
 git clone https://github.com/your-username/search-in-ai.git
 cd search-in-ai
+```
+### 2. 🏃 How to Use
+
+Run each algorithm individually on a maze text file:
+
+# Depth First Search
+```py
+python3 dfs.py maze1.txt
+```
+# Breadth First Search
+```py
+python3 bfs.py maze1.txt
+```
+# Greedy Best First Search
+```py
+python3 gbsf.py maze1.txt
+```
+# A* Search
+```py
+python3 astar.py maze1.txt
+```
+# Minimax (for games)
+```py
+python3 minimax.py
+```
+# Alpha-Beta Pruning (for games)
+```py
+python3 alphabeta.py
+```
+- Replace maze1.txt with your maze file.
