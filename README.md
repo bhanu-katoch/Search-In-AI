@@ -24,7 +24,6 @@ This project demonstrates the implementation of various **AI Search Algorithms**
 
 Maze search progress and results are stored in the `assets/` folder.  
 
-### Examples:  
 
 ### DFS Search  
 ![DFS](assets/dfs.png)  
