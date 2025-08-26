@@ -9,7 +9,7 @@ class TicTacToeGUI:
         self.root.title(f"Tic Tac Toe ({self.n}x{self.n}) - Minimax AI")
         self.root.config(bg="#1e1e2f")
 
-        self.game = TicTacToe(self.n, "X", "O")  # AI = X, Human = O
+        self.game = TicTacToe_minimax(self.n, "X", "O")  # AI = X, Human = O
         self.state = self.game.grid
         self.buttons = [[None for _ in range(self.n)] for _ in range(self.n)]
 

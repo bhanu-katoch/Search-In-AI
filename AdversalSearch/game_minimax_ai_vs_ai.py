@@ -9,7 +9,7 @@ class TicTacToeAIvsAI:
         self.root.title(f"🤖 AI vs AI Tic Tac Toe ({self.n}x{self.n}) 🤖")
         self.root.config(bg="#1e1e2f")  # dark background
 
-        self.game = TicTacToe(self.n, "X", "O")
+        self.game = TicTacToe_alphaBeta(self.n, "X", "O")
         self.state = self.game.grid
         self.buttons = [[None for _ in range(self.n)] for _ in range(self.n)]
 
