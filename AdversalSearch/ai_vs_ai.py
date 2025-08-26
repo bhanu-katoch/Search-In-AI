@@ -1,11 +1,15 @@
+from grid_minimax import TicTacToe_minimax
+from grid_alphaBeta import TicTacToe_alphaBeta
 import time
-from grid import TicTacToe
+
 def ai_vs_ai():
-    game = TicTacToe(3,"X","O")
+    game = TicTacToe_alphaBeta(3,"X","O") # replace code here for aplha beta
     state = game.grid
 
     print("Initial Board:")
     game.print_board(state)
+
+    time1 = time.time()
 
     while not game.terminate(state):
         player = game.pturn
@@ -19,7 +23,7 @@ def ai_vs_ai():
 
         # switch player
         game.pturn = game.p1 if player==game.p2 else game.p2
-        time.sleep(1)
+        # time.sleep(1)
 
     score = game.utility(state)
     if score == 1:
@@ -28,6 +32,7 @@ def ai_vs_ai():
         print("AI O wins!")
     else:
         print("Draw!")
+    print("alpha-beta time : ",round(time.time()-time1,2),"s")
 
 if __name__=="__main__":
     ai_vs_ai()

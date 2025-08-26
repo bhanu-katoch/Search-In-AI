@@ -1,6 +1,7 @@
-from grid import TicTacToe
+from grid_minimax import TicTacToe_minimax
+from grid_alphaBeta import TicTacToe_alphaBeta
 def human_vs_ai():
-    g = TicTacToe(3,"X","O")
+    g = TicTacToe_minimax(3,"X","O") # replace code here for aplha beta
     state = g.grid
     human = "O"
     ai = "X"

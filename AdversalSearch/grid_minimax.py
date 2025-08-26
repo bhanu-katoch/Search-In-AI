@@ -1,7 +1,7 @@
 import random
 import copy
 
-class TicTacToe:
+class TicTacToe_minimax:
     def __init__(self,n,p1="X",p2="O"):
         self.n = n
         self.grid = [["0" for _ in range(n)] for _ in range(n)]
