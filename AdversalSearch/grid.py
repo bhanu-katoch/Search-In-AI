@@ -76,6 +76,13 @@ class Grid:
             return self.p2 
         else:
             return self.p1
+    def actions(self):
+        states = []
+        for i in range(self.n):
+            for j in range(self.n):
+                if self.grid[i][j]=="0":
+                    states.append((i,j))
+        return states
         
 
 
