@@ -41,7 +41,7 @@ Maze search progress and results are stored in the `assets/` folder.
 ![Minimax](assets/minimax.png)  
 
 #### Alpha-Beta Pruning Example  
-![AlphaBeta](assets/alphabeta.png)  
+![AlphaBeta](assets/alpha-beta.png)  
 
 ---
 
