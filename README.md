@@ -51,7 +51,8 @@ Maze search progress and results are stored in the `assets/` folder.
 - **Libraries:**  
   - `PIL (Pillow)` – for images  
   - `collections` – for queues & stacks  
-  - `heapq` – for priority queue (A*, GBFS)  
+  - `heapq` – for priority queue (A*, GBFS) 
+  - `tkinter` - for game ui 
 
 ---
 

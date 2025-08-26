@@ -1,6 +1,6 @@
-from grid import TicTacToe
+from grid_minimax import TicTacToe_minimax
+from grid_alphaBeta import TicTacToe_alphaBeta
 import tkinter as tk
-
 
 class TicTacToeAIvsAI:
     def __init__(self, root, n=3):
