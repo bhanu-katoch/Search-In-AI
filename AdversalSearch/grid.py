@@ -1,89 +1,160 @@
 import random
-class Grid:
+import copy
+
+class TicTacToe:
     def __init__(self,n,p1="X",p2="O"):
         self.n = n
         self.grid = [["0" for _ in range(n)] for _ in range(n)]
-        self.turns = 0
         if p1==p2:
             raise Exception("Symbols can't be same")
-        self.p1 = p1
-        self.p2 = p2
-        self.pturn = random.choice([p1,p2])
+        self.p1 = p1 # max
+        self.p2 = p2 # min
+        self.pturn = random.choice([p1,p2])   # who starts
+        self.wining_pos = []
+        d1, d2 = [], []
+        for i in range(n):
+            row, col = [], []
+            for j in range(n):
+                row.append((i,j))
+                col.append((j,i))
+            d1.append((i,i))
+            d2.append((i,n-1-i))
+            self.wining_pos.append(row)
+            self.wining_pos.append(col)
+        self.wining_pos.append(d1)
+        self.wining_pos.append(d2)
 
-    def get_state(self):
-        return self.grid.copy()
+    def print_board(self, state=None):
+        if state is None:
+            state = self.grid
+
+        # Colors
+        RED = "\033[91m"
+        BLUE = "\033[94m"
+        RESET = "\033[0m"
+
+        print("\n" + "=" * (self.n * 4 - 1))
+        for i in range(self.n):
+            row = []
+            for j in range(self.n):
+                cell = state[i][j]
+                if cell == self.p1:
+                    row.append(RED + cell + RESET)
+                elif cell == self.p2:
+                    row.append(BLUE + cell + RESET)
+                else:
+                    row.append(" ")
+            print(" | ".join(row))
+            if i < self.n - 1:
+                print("-" * (self.n * 4 - 1))
+        print("=" * (self.n * 4 - 1) + "\n")
+
+    def calculate_state(self,state):
+        pos_p1, pos_p2, turns = [], [], 0
+        for i in range(self.n):
+            for j in range(self.n):
+                if state[i][j]==self.p1:
+                    pos_p1.append((i,j))
+                    turns+=1
+                elif state[i][j]==self.p2:
+                    pos_p2.append((i,j))
+                    turns+=1
+        return pos_p1,pos_p2,turns
     
-    def populate(self,filename):
-        with open(filename) as f:
-            content = f.read()
-        content = content.splitlines()
-        for i in range(self.n):
-            for j in range(self.n):
-                self.grid[i][j] = content[i][j]
-
-    def print(self):
-        for i in range(self.n):
-            for j in range(self.n):
-                print(self.grid[i][j],end=" ")
-            print()
-
-    def result(self,action):
-        (i,j),p = action
-        self.grid[i][j] = p
-
-    def terminal(self):
-        if self.turns==self.n:
-            return True
-        for i in range(self.n):
-            count =1
-            for j in range(1,self.n):
-                if self.grid[i][j]!=self.grid[i][j-1]:
-                    break
-                if self.grid[i][j]!="0":
-                    count+=1
-            if count==self.n:
+    def terminal(self,state):
+        pos_p1,pos_p2,turns = self.calculate_state(state)
+        for pos in self.wining_pos:
+            if all(elem in pos_p1 for elem in pos):
                 return True
-        for i in range(self.n):
-            count =1
-            for j in range(1,self.n):
-                if self.grid[j][i]!=self.grid[j-1][i]:
-                    break
-                if self.grid[j][i]!="0":
-                    count+=1
-            if count==self.n:
+            if all(elem in pos_p2 for elem in pos):
                 return True
-        count =1
-        for i in range(1,self.n):
-            if self.grid[i][i]!=self.grid[i-1][i-1]:
-                break
-            if self.grid[i][i]!="0":
-                count+=1
-        if count==self.n:
-            return True
-        count =1
-        for i in range(1,self.n):
-            if self.grid[i][self.n-i-1]!=self.grid[i-1][self.n-i]:
-                break
-            if self.grid[i][self.n-1-i]!="0":
-                count+=1
-        if count==self.n:
+        if turns == self.n*self.n:
             return True
         return False
-    def player(self):
-        if self.turns==self.n:
-            return None
-        if self.pturn==self.p1:
-            return self.p2 
+    
+    def utility(self,state):
+        pos_p1,pos_p2,_ = self.calculate_state(state)
+        for pos in self.wining_pos:
+            if all(elem in pos_p1 for elem in pos):
+                return 1   # p1 (max) wins
+            if all(elem in pos_p2 for elem in pos):
+                return -1  # p2 (min) wins
+        return 0  # draw
+    
+    def actions(self,state):
+        return [(i,j) for i in range(self.n) for j in range(self.n) if state[i][j]=="0"]
+
+    def result(self,state,action,player):
+        i,j = action
+        new_state = copy.deepcopy(state)
+        new_state[i][j] = player
+        return new_state
+
+    # ---- minimax ----
+    def max_value(self,state):
+        if self.terminal(state):
+            return self.utility(state)
+        v = float('-inf')
+        for action in self.actions(state):
+            v = max(v,self.min_value(self.result(state,action,self.p1)))
+        return v
+    
+    def min_value(self,state):
+        if self.terminal(state):
+            return self.utility(state)
+        v = float('inf')
+        for action in self.actions(state):
+            v = min(v,self.max_value(self.result(state,action,self.p2)))
+        return v
+    
+    def best_move(self,state,player):
+        if player==self.p1:   # maximizing
+            best_val = float('-inf')
+            move = None
+            for action in self.actions(state):
+                val = self.min_value(self.result(state,action,player))
+                if val > best_val:
+                    best_val = val
+                    move = action
+            return move
+        else:   # minimizing
+            best_val = float('inf')
+            move = None
+            for action in self.actions(state):
+                val = self.max_value(self.result(state,action,player))
+                if val < best_val:
+                    best_val = val
+                    move = action
+            return move
+if __name__=='__main__':
+    g = TicTacToe(3,"X","O")
+    state = g.grid
+    human = "O"
+    ai = "X"
+
+    g.print_board(state)
+    while not g.terminal(state):
+        if g.pturn == human:
+            # human plays
+            i,j = map(int,input("Enter row col: ").split())
+            if state[i][j]!="0":
+                print("Invalid move, try again.")
+                continue
+            state = g.result(state,(i,j),human)
+            g.pturn = ai
         else:
-            return self.p1
-    def actions(self):
-        states = []
-        for i in range(self.n):
-            for j in range(self.n):
-                if self.grid[i][j]=="0":
-                    states.append((i,j))
-        return states
-        
+            # AI plays
+            move = g.best_move(state,ai)
+            state = g.result(state,move,ai)
+            print(f"AI plays {move}")
+            g.pturn = human
+        g.print_board(state)
 
-
-
+    # game over
+    score = g.utility(state)
+    if score==1:
+        print("AI (X) wins!")
+    elif score==-1:
+        print("You (O) win!")
+    else:
+        print("Draw!")
