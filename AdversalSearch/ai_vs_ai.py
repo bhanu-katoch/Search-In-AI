@@ -7,7 +7,7 @@ def ai_vs_ai():
     print("Initial Board:")
     game.print_board(state)
 
-    while not game.terminal(state):
+    while not game.terminate(state):
         player = game.pturn
         move = game.best_move(state,player)
         if not move:
