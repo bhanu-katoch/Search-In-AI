@@ -4,3 +4,4 @@ output
 check.py
 test
 verify.py
+__pycache__
