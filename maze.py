@@ -237,7 +237,9 @@ class Maze:
         text_x = 10
         text_y = self.height * cell_size + 10  # slightly below maze
         draw.text((text_x, text_y), f"path : {len(solution)}", fill="white", font=font)
-        draw.text((text_x+100, text_y), f"explored : {self.num_explored}", fill="white", font=font)
+        draw.text((text_x+200, text_y), f"explored : {self.num_explored}", fill="white", font=font)
+        draw.text((text_x+400, text_y), f"{filename[13:-4]}", fill="white", font=font)
+
 
         img.save(filename)
 
