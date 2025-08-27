@@ -50,7 +50,7 @@ class TicTacToeAIvsAI:
             self.root.grid_columnconfigure(i, weight=1)
 
     def play_turn(self):
-        if self.game.terminate(self.state):
+        if self.game.terminal(self.state):
             self.end_game()
             return
 
@@ -68,7 +68,7 @@ class TicTacToeAIvsAI:
         # switch player
         self.game.pturn = self.game.p1 if current == self.game.p2 else self.game.p2
 
-        if not self.game.terminate(self.state):
+        if not self.game.terminal(self.state):
             self.root.after(800, self.play_turn)  # smoother (0.8s)
         else:
             self.end_game()

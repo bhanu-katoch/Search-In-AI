@@ -7,7 +7,7 @@ def human_vs_ai():
     ai = "X"
 
     g.print_board(state)
-    while not g.terminate(state):
+    while not g.terminal(state):
         if g.pturn == human:
             # human plays
             i,j = map(int,input("Enter row col: ").split())

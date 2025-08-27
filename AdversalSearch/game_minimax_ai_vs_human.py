@@ -47,11 +47,11 @@ class TicTacToeGUI:
             self.root.grid_columnconfigure(i, weight=1)
 
     def human_move(self, i, j):
-        if self.state[i][j] != "0" or self.game.terminate(self.state):
+        if self.state[i][j] != "0" or self.game.terminal(self.state):
             return
         self.state[i][j] = self.game.p2
         self.buttons[i][j].config(text="O", bg="#5e3e3e", state="disabled")
-        if self.game.terminate(self.state):
+        if self.game.terminal(self.state):
             self.end_game()
             return
         self.root.after(500, self.ai_move)
@@ -62,7 +62,7 @@ class TicTacToeGUI:
             i, j = move
             self.state[i][j] = self.game.p1
             self.buttons[i][j].config(text="X", bg="#dc1b1b", state="disabled")
-        if self.game.terminate(self.state):
+        if self.game.terminal(self.state):
             self.end_game()
 
     def end_game(self):

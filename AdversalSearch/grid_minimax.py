@@ -61,7 +61,7 @@ class TicTacToe_minimax:
                     turns+=1
         return pos_p1,pos_p2,turns
     
-    def terminate(self,state):
+    def terminal(self,state):
         pos_p1,pos_p2,turns = self.calculate_state(state)
         for pos in self.wining_pos:
             if all(elem in pos_p1 for elem in pos):
@@ -92,7 +92,7 @@ class TicTacToe_minimax:
 
     # ---- minimax ----
     def max_value(self,state):
-        if self.terminate(state):
+        if self.terminal(state):
             return self.utility(state)
         v = float('-inf')
         for action in self.actions(state):
@@ -100,7 +100,7 @@ class TicTacToe_minimax:
         return v
     
     def min_value(self,state):
-        if self.terminate(state):
+        if self.terminal(state):
             return self.utility(state)
         v = float('inf')
         for action in self.actions(state):

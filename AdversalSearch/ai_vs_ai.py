@@ -11,7 +11,7 @@ def ai_vs_ai():
 
     time1 = time.time()
 
-    while not game.terminate(state):
+    while not game.terminal(state):
         player = game.pturn
         move = game.best_move(state,player)
         if not move:
